@@ -40,7 +40,7 @@ namespace viacinema
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("https://localhost:5050")
+                .UseUrls("https://localhost:44318")
                 .Build();
     }
 }
