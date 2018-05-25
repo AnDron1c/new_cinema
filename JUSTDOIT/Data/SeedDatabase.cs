@@ -12,7 +12,7 @@ namespace viacinema.Data
         public static void Seed(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-
+            // comment
             if (!context.Movies.Any())
             {
                 AddMovies(context);

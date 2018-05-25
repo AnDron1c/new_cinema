@@ -39,9 +39,23 @@
                             <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes</span>
                             <span class="screen-type"><b>Screen Type:</b> @screening.ScreenType</span>
                             @*<input class="book-button" type="button" value="Book" />*@
-                            <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
-                                Book
-                            </button>
+                            @if (this.User.Identity.IsAuthenticated)
+                            {
+                                <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
+                                    Book
+                                </button>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary book-button" asp-area="" asp-controller="Account" asp-action="Login">
+                                    Book
+                                </a>
+                                
+
+
+                            }
+
+</div>
                 </li>
             }
         }
@@ -192,20 +206,20 @@
         background-size: cover;
     }
 
-    .movie-rating .four {
-        width: 81px;
+    .movie-rating.four {
+        width: 130px;
     }
 
-    .movie-rating .three {
-        width: 63px;
+    .movie-rating.three {
+        width: 111px;
     }
 
-    .movie-rating .two {
-        width: 45px;
+    .movie-rating.two {
+        width: 91px;
     }
 
-    .movie-rating .one {
-        width: 25px;
+    .movie-rating.one {
+        width: 73px;
     }
 
     .modal-title {

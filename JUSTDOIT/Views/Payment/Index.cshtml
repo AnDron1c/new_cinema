@@ -14,7 +14,7 @@
 
         <div class="form-group">
             @Html.LabelFor(p => p.CardNumber)
-            @Html.TextBoxFor(p => p.CardNumber, new { @class = "form-control" })
+            @Html.TextBoxFor(p => p.CardNumber, new { @maxlength = "16", @class = "form-control" })
             @Html.ValidationMessageFor(p => p.CardNumber)
         </div>
 
