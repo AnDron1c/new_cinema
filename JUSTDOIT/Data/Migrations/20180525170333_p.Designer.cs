@@ -11,8 +11,8 @@ using System;
 namespace viacinema.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180524170759_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180525170333_p")]
+    partial class p
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

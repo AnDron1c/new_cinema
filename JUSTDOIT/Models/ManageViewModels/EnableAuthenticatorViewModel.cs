@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace JUSTDOIT.Models.ManageViewModels
+namespace viacinema.Models.ManageViewModels
 {
     public class EnableAuthenticatorViewModel
     {

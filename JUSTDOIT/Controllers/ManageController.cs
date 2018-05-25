@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using JUSTDOIT.Models;
-using JUSTDOIT.Models.ManageViewModels;
-using JUSTDOIT.Services;
+using viacinema.Models;
+using viacinema.Models.ManageViewModels;
+using viacinema.Services;
 
-namespace JUSTDOIT.Controllers
+namespace viacinema.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -522,7 +522,7 @@ namespace JUSTDOIT.Controllers
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("JUSTDOIT"),
+                _urlEncoder.Encode("viacinema"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

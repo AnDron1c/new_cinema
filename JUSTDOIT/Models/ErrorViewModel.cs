@@ -1,6 +1,6 @@
 using System;
 
-namespace JUSTDOIT.Models
+namespace viacinema.Models
 {
     public class ErrorViewModel
     {

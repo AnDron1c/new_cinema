@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using JUSTDOIT.Models;
-using JUSTDOIT.Models.AccountViewModels;
-using JUSTDOIT.Services;
+using viacinema.Models;
+using viacinema.Models.AccountViewModels;
+using viacinema.Services;
 
-namespace JUSTDOIT.Controllers
+namespace viacinema.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]

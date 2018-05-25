@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using JUSTDOIT.Data;
-using JUSTDOIT.Models;
-using JUSTDOIT.Services;
+using viacinema.Data;
+using viacinema.Models;
+using viacinema.Services;
 
-namespace JUSTDOIT
+namespace viacinema
 {
     public class Startup
     {

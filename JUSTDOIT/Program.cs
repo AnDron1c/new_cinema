@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using JUSTDOIT.Data;
+using viacinema.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using viacinema.Data;
 
-namespace JUSTDOIT
+namespace viacinema
 {
     public class Program
     {
@@ -40,7 +40,7 @@ namespace JUSTDOIT
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5050")
+                .UseUrls("https://localhost:5050")
                 .Build();
     }
 }

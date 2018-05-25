@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using JUSTDOIT.Models;
 using viacinema.Models;
 
-namespace JUSTDOIT.Data
+namespace viacinema.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

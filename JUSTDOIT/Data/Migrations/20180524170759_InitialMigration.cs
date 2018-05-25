@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace JUSTDOIT.Data.Migrations
+namespace viacinema.Data.Migrations
 {
     public partial class InitialMigration : Migration
     {

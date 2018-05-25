@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JUSTDOIT.Models.AccountViewModels
+namespace viacinema.Models.AccountViewModels
 {
     public class LoginViewModel
     {

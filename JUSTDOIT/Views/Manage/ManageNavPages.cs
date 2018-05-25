@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace JUSTDOIT.Views.Manage
+namespace viacinema.Views.Manage
 {
     public static class ManageNavPages
     {
