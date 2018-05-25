@@ -18,16 +18,16 @@ namespace viacinema.Models
         [Required]
         public string NameOnCard { get; set; }
 
-        [Required]
+        [Required, MaxLength(16), MinLength(16)]
         public string CardNumber { get; set; }
 
-        [Required]
+        [Required, Range(1, 12)]
         public byte ExpiryMonth { get; set; }
 
-        [Required]
+        [Required, Range(2018, 2030)]
         public int ExpiryYear { get; set; }
 
-        [Required]
+        [Required, Range(100, 999)]
         public int SecurityCode { get; set; }
 
         [Required]
