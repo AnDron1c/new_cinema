@@ -65,7 +65,7 @@ namespace viacinema.Controllers
         [HttpPost, NonAction]
         public async Task<bool> ValidateCreditCardAsync(string creditCardNumber)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:44318/api/creditcard/validate", new { creditCardNumber });
+            HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:44318/api/creditcard/validate", creditCardNumber);
             response.EnsureSuccessStatusCode();
 
             bool isValid = await response.Content.ReadAsAsync<bool>();
