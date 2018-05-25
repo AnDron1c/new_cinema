@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using JUSTDOIT.Models;
-using JUSTDOIT.Data;
+using viacinema.Models;
+using viacinema.Data;
 using viacinema.ViewModels;
 
-namespace JUSTDOIT.Controllers
+namespace viacinema.Controllers
 {
     public class HomeController : Controller
     {

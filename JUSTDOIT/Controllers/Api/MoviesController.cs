@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using JUSTDOIT.Data;
+using viacinema.Data;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Data;
 using viacinema.Models;

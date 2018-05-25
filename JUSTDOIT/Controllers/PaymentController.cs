@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using JUSTDOIT.Data;
+using viacinema.Data;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Data;
 using viacinema.Models;
@@ -65,7 +65,7 @@ namespace viacinema.Controllers
         [HttpPost, NonAction]
         public async Task<bool> ValidateCreditCardAsync(string creditCardNumber)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync("http://localhost:5050/api/creditcard/validate", new { creditCardNumber });
+            HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:5050/api/creditcard/validate", new { creditCardNumber });
             response.EnsureSuccessStatusCode();
 
             bool isValid = await response.Content.ReadAsAsync<bool>();

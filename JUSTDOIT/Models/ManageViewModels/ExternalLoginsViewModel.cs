@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace JUSTDOIT.Models.ManageViewModels
+namespace viacinema.Models.ManageViewModels
 {
     public class ExternalLoginsViewModel
     {

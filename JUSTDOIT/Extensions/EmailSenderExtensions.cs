@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using JUSTDOIT.Services;
+using viacinema.Services;
 
-namespace JUSTDOIT.Services
+namespace viacinema.Services
 {
     public static class EmailSenderExtensions
     {
