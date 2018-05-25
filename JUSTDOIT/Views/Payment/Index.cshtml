@@ -1,0 +1,117 @@
+﻿@model viacinema.ViewModels.PaymentViewModel
+
+@using viacinema.Models
+
+<div class="payment-page">
+    <h2>Payment</h2>
+    @using (Html.BeginForm("Pay", "Payment"))
+    {
+    <h3>Movie: @Model.Movie.Title | Seat: @(Model.SeatNo % 10), Row: @(Model.SeatNo / 10)</h3>
+        <div class="price">
+            <span class="title">Price to be paid:</span> <span class="amount">@Model.Amount DKK</span>
+        </div>
+        @Html.ValidationSummary(true, "Please fix the following errors.")
+
+        <div class="form-group">
+            @Html.LabelFor(p => p.CardNumber)
+            @Html.TextBoxFor(p => p.CardNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.CardNumber)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(p => p.NameOnCard)
+            @Html.TextBoxFor(p => p.NameOnCard, new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.NameOnCard)
+        </div>
+
+        <div class="bottom">
+            <div class="form-group">
+                @Html.LabelFor(p => p.ExpiryMonth)
+                @Html.DropDownListFor(p => p.ExpiryMonth, new SelectList(Model.Months, "Value", "Value"), new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.ExpiryYear)
+                @Html.DropDownListFor(p => p.ExpiryYear, new SelectList(Model.Years, "Value", "Value"), new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.SecurityCode)
+                @Html.TextBoxFor(p => p.SecurityCode, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.SecurityCode)
+            </div>
+        </div>
+
+        @Html.HiddenFor(p => p.ScreeningId)
+        @Html.HiddenFor(p => p.SeatNo)
+        @Html.HiddenFor(p => p.UserId)
+        @Html.HiddenFor(p => p.Amount)
+
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-primary pay-button">Pay now</button>
+    }
+</div>
+
+<style>
+    .payment-page {
+        margin-top: 30px;
+        color: #555;
+    }
+
+    .price {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+        margin: 40px 0;
+        border: 1px solid #ddd;
+        border-left: none;
+        border-right: none;
+        font-size: 22px;
+    }
+
+    .form-group label {
+        text-transform: uppercase;
+    }
+
+    .form-control {
+        border-radius: 0px;
+        height: 50px;
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .bottom > div {
+        display: inline-flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 0 20px;
+    }
+
+    .bottom > div:first-child {
+        margin-left: unset;
+    }
+
+    .bottom > div:last-child {
+        margin-right: unset;
+    }
+
+    .pay-button {
+        height: 60px;
+        width: 100%;
+        margin: 40px 0 60px 0;
+        border-radius: 0px;
+        font-size: 25px;
+    }
+
+    .field-validation-error {
+        color: #eb2b2b;
+        font-size: 17px;
+        position: relative;
+        top: -30px;
+    }
+
+</style>

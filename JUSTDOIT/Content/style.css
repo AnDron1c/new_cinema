@@ -1,0 +1,12 @@
+﻿body {
+
+    .home {
+            .movie-container {
+                    .movie-image {
+                        width: 150px;
+                        height: 150px;
+                    }
+            }
+    }
+
+}

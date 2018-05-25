@@ -1,0 +1,239 @@
+﻿@model viacinema.ViewModels.MoreInfoViewModel
+
+@{
+    ViewData["Title"] = "Movie Specifics";
+}
+
+@using viacinema.Models
+
+<h2>Specifics</h2>
+@{
+        Movie movie = @Model.Movie;
+        string ratingClassName = "";
+        switch (@movie.Rating)
+        {
+            case 1: ratingClassName = "one"; break;
+            case 2: ratingClassName = "two"; break;
+            case 3: ratingClassName = "three"; break;
+            case 4: ratingClassName = "four"; break;
+            case 5:
+            default: ratingClassName = "five"; break;
+        }
+    }
+<h3 class="movie-title">@movie.Title</h3>
+<div class="movie-content">
+    <img class="movie-image" src="@movie.ImageUrl" />
+    <div class="movie-info">
+        <p class="movie-description"><b>Description:</b> @movie.Description</p>
+        <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
+        <p class="movie-rating @ratingClassName"><b>Rating:</b> <span></span></p>
+    </div>
+</div>
+<div class="screenings">
+    <h2>Screenings</h2>
+    <ul>
+        @{ foreach (Screening screening in @Model.Screenings)
+            {
+                <li class="screening-container">
+                    <div class="screening-content">
+                        <p class="screening-time">
+                            <b>Date and Time: </b>@screening.StartTime
+                            &nbsp;&nbsp;<b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes
+                            <b>&nbsp;&nbsp;Screen Type:</b> @screening.ScreenType
+                            @*<input class="book-button" type="button" value="Book" />*@
+                            <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
+                                Book
+                            </button>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="reserveSeatModal" tabindex="-1" role="dialog" aria-labelledby="reserveSeatModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Reserve a seat</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h3>
+                        Room : <span class="room-number"></span>
+                    </h3>
+
+                    @*TABLE/SEAT RESERVATION GRID*@
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            </thead>
+                            <tbody class="seat-grid"></tbody>
+                        </table>
+                    </div>
+
+                    <br />
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="continue-button" type="button" class="btn btn-primary">Reserve and Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script>
+        var selectedSeat = -1;
+        var selectedScreening = -1;
+
+        function updateTable(seats) {
+            var html = "";
+
+            const rows = seats.length / 10;
+            for (var i = 0; i < seats.length; i++) {
+                var el = "";
+                if (i == 0) {
+                    el += "<tr>";
+                }
+                else if (i % 10 == 0 && i != seats.length - 1) {
+                    el += "</tr><tr>";
+                }
+                const seat = seats[i];
+                var className = seat.occupied ? "red" : "green";
+                if (i == selectedSeat) {
+                    className += " selected";
+                }
+                el += "<td class='" + className + " seat-cell' data-seat-no = " + seat.seatNo + ">" + seat.seatNo + " </td>";
+                if (i == seats.length - 1) {
+                    el += "</tr>";
+                }
+                html += el;
+            }
+            $('.seat-grid').html(html);
+
+            $(".seat-cell").on("click", function () {
+
+                var seatNo = $(this).attr("data-seat-no");
+                if (seats[seatNo].occupied) return;
+
+                selectedSeat = seatNo;
+                $(".seat-cell").removeClass('selected');
+                $(this).addClass('selected');
+            });
+        }
+
+
+        $(".book-button").on("click", function () {
+            var screeningID = $(this).attr("data-screening");
+            selectedScreening = screeningID;
+            $.ajax({
+                url: "/api/screenings/" + screeningID,
+                method: "GET",
+                success: function (screening) {
+                    $('.room-number').text(screening.roomNo);
+                    $('.screen-type').text(screening.screenType);
+                    $.ajax({
+                        url: "/api/seats/seatsscreening/" + screening.id + "/" + screening.roomNo,
+                        method: "GET",
+                        success: function (seats) {
+                            updateTable(seats);
+                            console.log(seats)
+                        }
+                    });
+                }
+            });
+        });
+
+        document.getElementById("continue-button").onclick = function () {
+            if (selectedSeat == -1) {
+                alert("Please select a seat!")
+                return;
+            }
+            console.log(selectedScreening);
+            console.log(selectedSeat);
+            location.href = "/payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
+        };
+    </script>
+}
+
+<style>
+    .movie-rating {
+        display: flex;
+        align-items: center;
+    }
+
+    .movie-rating span {
+        display: inline-flex;
+        width: 100px;
+        height: 40px;
+        background: url("https://www.gruppomazzini.it/site/uploads/2017/06/five-stars.png");
+        background-size: cover;
+    }
+
+    .movie-rating .four {
+        width: 81px;
+    }
+
+    .movie-rating .three {
+        width: 63px;
+    }
+
+    .movie-rating .two {
+        width: 45px;
+    }
+
+    .movie-rating .one {
+        width: 25px;
+    }
+
+    .modal-title {
+        font-size: 25px;
+    }
+
+    .close {
+        font-size: 50px;
+        font-weight: 100;
+        height: 40px;
+        margin-top: -5px;
+    }
+
+    .modal-body {
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    td {
+        color: white;
+        text-align: center;
+    }
+
+        td.green:hover {
+            opacity: .7;
+        }
+
+        td.green {
+            cursor: pointer;
+            background: #48c348;
+        }
+
+        td.red {
+            background: #bb1818;
+            cursor: not-allowed;
+        }
+
+        td.selected {
+            background: #337ab7;
+        }
+
+</style>
