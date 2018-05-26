@@ -24,7 +24,7 @@
 <div class="movie-content">
     <img class="movie-image" src="@movie.ImageUrl" />
     <div class="movie-info">
-        <p class="movie-description"><b>Description:</b> @movie.Description</p>
+        <p class="movie-description"><b>Description:</b> @movie.Description Typically descriptions are larger than just a couple of words but the thing is we don't know how to describe this movie so it'll just have this instead... Enjoy.</p>
         <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
         <p class="movie-rating @ratingClassName"><b>Rating:</b> <span></span></p>
     </div>
@@ -34,30 +34,23 @@
     <ul>
         @{ foreach (Screening screening in @Model.Screenings)
             {
-                <li class="screening-container">
-                    <div class="screening-content">
-                        <p class="screening-time">
-                            <b>Date and Time: </b>@screening.StartTime
-                            &nbsp;&nbsp;<b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes
-                            <b>&nbsp;&nbsp;Screen Type:</b> @screening.ScreenType
-                            @*<input class="book-button" type="button" value="Book" />*@
-                            @if (this.User.Identity.IsAuthenticated)
-                            {
+                <li class="screening-container">   
+                            <span class="date-time"><b>Date and Time: </b>@screening.StartTime </span>
+                            <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes</span>
+                            <span class="screen-type"><b>Screen Type:</b> @screening.ScreenType</span>
+                            @{ if (this.User.Identity.IsAuthenticated)
+                                {
                                 <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
                                     Book
                                 </button>
-                            }
-                            else
-                            {
+                                }
+                                else
+                                {
                                 <a class="btn btn-primary book-button" asp-area="" asp-controller="Account" asp-action="Login">
                                     Book
                                 </a>
-                                
-
-
-                            }
-
-</div>
+                                }
+                             }
                 </li>
             }
         }
@@ -136,7 +129,7 @@
             $(".seat-cell").on("click", function () {
 
                 var seatNo = $(this).attr("data-seat-no");
-                if (seats[seatNo].occupied) return;
+                if (seats[seatNo - 1].occupied) return;
 
                 selectedSeat = seatNo;
                 $(".seat-cell").removeClass('selected');
@@ -153,13 +146,11 @@
                 method: "GET",
                 success: function (screening) {
                     $('.room-number').text(screening.roomNo);
-                    $('.screen-type').text(screening.screenType);
                     $.ajax({
                         url: "/api/seats/seatsscreening/" + screening.id + "/" + screening.roomNo,
                         method: "GET",
                         success: function (seats) {
                             updateTable(seats);
-                            console.log(seats)
                         }
                     });
                 }
@@ -182,8 +173,16 @@
     .movie-rating {
         display: flex;
         align-items: center;
+        margin-top: -9px;
     }
 
+    .movie-content {
+        display: inline-flex;
+    }
+
+    .btn-primary {
+        width: 130px;
+    }
     .movie-rating span {
         display: inline-flex;
         width: 100px;
@@ -212,6 +211,10 @@
         font-size: 25px;
     }
 
+    .movie-info {
+        padding-left: 16px;
+    }
+
     .close {
         font-size: 50px;
         font-weight: 100;
@@ -224,6 +227,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .screening-container {
+        border: 2px solid #CCCC;
+        margin-top: 0;
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        align-items: center;
+        justify-content: space-around;
     }
 
     td {
@@ -249,4 +262,9 @@
             background: #337ab7;
         }
 
+    img {
+        width: 350px;
+        height: 250px;
+        margin: 0px 20px 20px 0;
+    }
 </style>
