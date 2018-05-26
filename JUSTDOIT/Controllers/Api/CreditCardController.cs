@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace viacinema.Controllers.Api
@@ -6,12 +7,15 @@ namespace viacinema.Controllers.Api
     [Route("api/creditcard")]
     public class CreditCardController : Controller
     {
+        // Checks if credit card number is valid
+        // checks that all characters are digits (0-9)
+        // makes checksum for credit card numbers, so use a real credit card number (test ones)
         [HttpPost("validate")]
         public bool Validate([FromBody] string value)
         {
-            if (value == "")
+            if (String.IsNullOrWhiteSpace(value))
             {
-                return true;
+                return false;
             }
 
             string ccValue = value as string;

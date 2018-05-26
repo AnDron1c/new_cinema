@@ -15,8 +15,14 @@ namespace viacinema.ViewModels
 
         public int ScreeningId { get; set; }
 
+        public Screening Screening { get; set; }
+
         [Required]
         public int SeatNo { get; set; }
+
+        public int SeatId { get; set; }
+
+        public Seat Seat { get; set; }
 
         public string UserId { get; set; }
 
@@ -39,15 +45,15 @@ namespace viacinema.ViewModels
 
         public Movie Movie { get; set; }
 
-        public PaymentViewModel(ApplicationDbContext context, int screeningId, int seatNo, decimal seatPrice, string userId)
+        public PaymentViewModel(Screening screening, Seat seat, string userId)
         {
-            ScreeningId = screeningId;
-            Amount = seatPrice;
-            SeatNo = seatNo;
+            Screening = screening;
+            ScreeningId = screening.Id;
+            Amount = seat.Price;
+            SeatNo = seat.SeatNo;
+            SeatId = seat.Id;
+            Seat = seat;
             UserId = userId;
-
-            Screening screening = context.Screenings.SingleOrDefault(s => s.Id == screeningId);
-            Movie = context.Movies.SingleOrDefault(m => m.Id == screening.MovieId);
 
             List<object> months = new List<object>() {
                 new { Value = 1 },

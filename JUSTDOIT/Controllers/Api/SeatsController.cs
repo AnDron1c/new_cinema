@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using viacinema.Data;
 using Microsoft.AspNetCore.Mvc;
-using viacinema.Data;
 using viacinema.Models;
 
 namespace viacinema.Controllers.Api
@@ -84,11 +80,6 @@ namespace viacinema.Controllers.Api
 
             if (seatInDb == null)
                 return NotFound();
-
-            //movieInDb.Title = movie.Title != null ? movie.Title : movieInDb.Title;
-            //movieInDb.Description = movie.Description != null ? movie.Description : movieInDb.Description;
-            //movieInDb.Genre = movie.Genre != null ? movie.Genre : movieInDb.Genre;
-            //movieInDb.Rating = movie.Rating != null ? movie.Rating : movieInDb.Rating;
 
             context.SaveChanges();
 

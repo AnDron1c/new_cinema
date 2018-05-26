@@ -2,43 +2,60 @@
 
 @{
     ViewData["Title"] = "Reservations";
+
+    int GetSeatNumber(int seatNo)
+    {
+        if ((seatNo % 10) == 0) return 10;
+        return seatNo % 10;
+    }
+
+    int GetRowNumber(int seatNo)
+    {
+        return Convert.ToInt32(Math.Ceiling((double)seatNo / 10));
+    }
 }
 
 <h2>Your Reservations</h2>
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">Movie</th>
-            <th scope="col">Seat</th>
-            <th scope="col">Room</th>
-            <th scope="col">Start time</th>
-            <th scope="col">Screen type</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            foreach (Payment payment in @Model.Payments)
-            {
-                <tr>
-                    <th scope="row">@payment.Screening.Movie.Title</th>
-                    <td>@payment.SeatNo</td>
-                    <td>@payment.Screening.RoomNo</td>
-                    <td>@payment.Screening.StartTime</td>
-                    <td>@payment.Screening.ScreenType</td>
-                </tr>
+@if (@Model.Payments.Count <= 0)
+{
+    <h3>You don't have any upcoming reservations yet!</h3>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Movie</th>
+                <th scope="col">Seat</th>
+                <th scope="col">Room</th>
+                <th scope="col">Start time</th>
+                <th scope="col">Screen type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Payment payment in @Model.Payments)
+                {
+                    <tr>
+                        <th scope="row">@payment.Screening.Movie.Title</th>
+                        <td>@GetSeatNumber(payment.Seat.SeatNo) (@GetRowNumber(@payment.Seat.SeatNo) row)</td>
+                        <td>@payment.Screening.RoomNo</td>
+                        <td>@payment.Screening.StartTime</td>
+                        <td>@payment.Screening.ScreenType</td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+}
 <style>
     table {
-        margin-top: 30px;
+        margin: 30px 0;
     }
     td, th {
         height: 50px;
-        line-height: 50px;
+        line-height: 50px !important;
         font-size: 17px;
     }
 </style>

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using viacinema.Data;
 using Microsoft.AspNetCore.Mvc;
-using viacinema.Data;
 using viacinema.Models;
 using viacinema.ViewModels;
 
@@ -26,7 +24,7 @@ namespace viacinema.Controllers
             var movie = context.Movies
                 .Single(m => m.Id == id);
             var screenings = context.Screenings
-                .Where(s => s.MovieId == id && DateTime.Now < s.StartTime)
+                .Where(s => s.MovieId == id && DateTime.Now < s.StartTime) // gets screenings that are only in future
                 .OrderByDescending(s => s.StartTime)
                 .ToList();
 
@@ -35,22 +33,6 @@ namespace viacinema.Controllers
             {
                 seatScreenings.AddRange(context.SeatScreeningMediator.Where(s => s.ScreeningId == screening.Id).ToList());
             }
-
-            return View(new MoreInfoViewModel(movie, screenings, seatScreenings));
-        }
-
-        [HttpGet]
-        public IActionResult GetScreenings(int movieId, int screeningId, int roomNo)
-        {
-            var movie = context.Movies
-                .Single(m => m.Id == movieId);
-            var screenings = context.Screenings
-                .Where(s => s.MovieId == movieId && DateTime.Now < s.StartTime)
-                .OrderByDescending(s => s.StartTime)
-                .ToList();
-
-
-            var seatScreenings = context.SeatScreeningMediator.Select(s => s).Where(s => s.ScreeningId == screeningId && s.RoomNo == roomNo).ToList();
 
             return View(new MoreInfoViewModel(movie, screenings, seatScreenings));
         }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using viacinema.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using viacinema.Data;
 
 namespace viacinema
 {
@@ -25,6 +19,7 @@ namespace viacinema
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
+                    // seed the database with data for testing (movies, screenings, seats, rooms and etc.)
                     SeedDatabase.Seed(context);
                 }
                 catch (Exception ex)
@@ -40,7 +35,7 @@ namespace viacinema
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("https://localhost:44318")
+                .UseUrls("https://localhost:44318") // start server on custom port
                 .Build();
     }
 }

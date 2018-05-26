@@ -8,25 +8,15 @@
 
 <h2>Specifics</h2>
 @{
-        Movie movie = @Model.Movie;
-        string ratingClassName = "";
-        switch (@movie.Rating)
-        {
-            case 1: ratingClassName = "one"; break;
-            case 2: ratingClassName = "two"; break;
-            case 3: ratingClassName = "three"; break;
-            case 4: ratingClassName = "four"; break;
-            case 5:
-            default: ratingClassName = "five"; break;
-        }
-    }
+    Movie movie = @Model.Movie;
+}
 <h3 class="movie-title">@movie.Title</h3>
 <div class="movie-content">
     <img class="movie-image" src="@movie.ImageUrl" />
     <div class="movie-info">
         <p class="movie-description"><b>Description:</b> @movie.Description Typically descriptions are larger than just a couple of words but the thing is we don't know how to describe this movie so it'll just have this instead... Enjoy.</p>
         <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
-        <p class="movie-rating @ratingClassName"><b>Rating:</b> <span></span></p>
+        @Html.Partial("_RatingPartial", @movie)
     </div>
 </div>
 <div class="screenings">
@@ -49,10 +39,12 @@
                                 <a class="btn btn-primary book-button" asp-area="" asp-controller="Account" asp-action="Login">
                                     Book
                                 </a>
+                                    }
                                 }
-                             }
-                </li>
+                    </li>
+                
             }
+           
         }
     </ul>
 </div>
@@ -99,6 +91,7 @@
     {
     <script>
         var selectedSeat = -1;
+        var selectedSeatId = -1;
         var selectedScreening = -1;
 
         function updateTable(seats) {
@@ -118,7 +111,7 @@
                 if (i == selectedSeat) {
                     className += " selected";
                 }
-                el += "<td class='" + className + " seat-cell' data-seat-no = " + seat.seatNo + ">" + seat.seatNo + " </td>";
+                el += "<td class='" + className + " seat-cell' data-seat-no = " + seat.seatNo + " data-seat-id='" + seat.seatId + "' >" + seat.seatNo + " </td>";
                 if (i == seats.length - 1) {
                     el += "</tr>";
                 }
@@ -129,9 +122,11 @@
             $(".seat-cell").on("click", function () {
 
                 var seatNo = $(this).attr("data-seat-no");
+                var seatId = $(this).attr("data-seat-id");
                 if (seats[seatNo - 1].occupied) return;
 
                 selectedSeat = seatNo;
+                selectedSeatId = seatId;
                 $(".seat-cell").removeClass('selected');
                 $(this).addClass('selected');
             });
@@ -164,7 +159,7 @@
             }
             console.log(selectedScreening);
             console.log(selectedSeat);
-            location.href = "/payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
+            location.href = "/payment/?seat=" + selectedSeatId + "&screening=" + selectedScreening;
         };
     </script>
 }
@@ -174,41 +169,12 @@
         padding: unset;
     }
 
-    .movie-rating {
-        display: flex;
-        align-items: center;
-        margin-top: -9px;
-    }
-
     .movie-content {
         display: inline-flex;
     }
 
     .btn-primary {
         width: 130px;
-    }
-    .movie-rating span {
-        display: inline-flex;
-        width: 100px;
-        height: 40px;
-        background: url("https://www.gruppomazzini.it/site/uploads/2017/06/five-stars.png");
-        background-size: cover;
-    }
-
-    .movie-rating.four {
-        width: 130px;
-    }
-
-    .movie-rating.three {
-        width: 111px;
-    }
-
-    .movie-rating.two {
-        width: 91px;
-    }
-
-    .movie-rating.one {
-        width: 73px;
     }
 
     .modal-title {

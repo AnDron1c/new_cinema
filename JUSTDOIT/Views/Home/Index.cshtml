@@ -5,21 +5,7 @@
 }
 
 @using viacinema.Models
-@{
-    string GetClassName(int rating)
-    {
-        switch (rating)
-        {
-            case 1: return "one";
-            case 2: return "two";
-            case 3: return "three";
-            case 4: return  "four";
-            case 5:
-            default: return "five";
-        }
-    }
 
-}
 <div class="home">
     <h1>Movies</h1>
     <ul>
@@ -33,7 +19,7 @@
                         <div class="movie-info">
                             <p class="movie-description"><b>Description:</b> @movie.Description</p>
                             <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
-                            <p class="movie-rating @GetClassName(movie.Rating)"><b>Rating:</b> <span></span></p>
+                            @Html.Partial("_RatingPartial", @movie)
                             <a class="more-info-button" href="/MoreInfo/@movie.Id">Specifics</a>
                         </div>
                     </div>
@@ -64,13 +50,13 @@
         display: flex;
     }
 
-        .movie-content .movie-image {
-            flex: 2;
-        }
+    .movie-content .movie-image {
+        flex: 2;
+    }
 
-        .movie-content .movie-info {
-            flex: 4;
-        }
+    .movie-content .movie-info {
+        flex: 4;
+    }
 
     .movie-rating {
         margin-bottom: 20px;
@@ -92,34 +78,5 @@
         opacity: .7;
         color: #fff;
         text-decoration: unset;
-    }
-
-    .movie-rating {
-        display: flex;
-        align-items: center;
-    }
-
-    .movie-rating span {
-        display: inline-flex;
-        width: 100px;
-        height: 40px;
-        background: url("https://www.gruppomazzini.it/site/uploads/2017/06/five-stars.png");
-        background-size: cover;
-    }
-
-    .movie-rating.four {
-        width: 130px;
-    }
-
-    .movie-rating.three {
-        width: 111px;
-    }
-
-    .movie-rating.two {
-        width: 91px;
-    }
-
-    .movie-rating.one {
-        width: 73px;
     }
 </style>
