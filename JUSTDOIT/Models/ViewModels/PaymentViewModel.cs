@@ -1,10 +1,7 @@
 ﻿using viacinema.Data;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
-using viacinema.Data;
 using viacinema.Models;
 
 namespace viacinema.ViewModels
@@ -21,7 +18,7 @@ namespace viacinema.ViewModels
         [Required]
         public int SeatNo { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required, Display(Name = "Name on card")]
         public string NameOnCard { get; set; }
@@ -42,12 +39,12 @@ namespace viacinema.ViewModels
 
         public Movie Movie { get; set; }
 
-        public PaymentViewModel(ApplicationDbContext context, int screeningId, int seatNo, decimal seatPrice)
+        public PaymentViewModel(ApplicationDbContext context, int screeningId, int seatNo, decimal seatPrice, string userId)
         {
             ScreeningId = screeningId;
             Amount = seatPrice;
             SeatNo = seatNo;
-            UserId = 1;
+            UserId = userId;
 
             Screening screening = context.Screenings.SingleOrDefault(s => s.Id == screeningId);
             Movie = context.Movies.SingleOrDefault(m => m.Id == screening.MovieId);

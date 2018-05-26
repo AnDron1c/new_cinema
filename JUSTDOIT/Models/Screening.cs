@@ -13,6 +13,8 @@ namespace viacinema.Models
         [Required]
         public int MovieId { get; set; }
 
+        public Movie Movie { get; set; }
+
         [Required, DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
 

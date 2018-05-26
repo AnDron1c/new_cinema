@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using viacinema.Data;
 using viacinema.Models;
 using viacinema.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace viacinema.Controllers
 {
@@ -34,7 +35,13 @@ namespace viacinema.Controllers
 
             if (screening == null || seat == null) throw new NullReferenceException("screening or seat are not in database");
 
-            return View(new PaymentViewModel(context, screeningId, seatNo, seat.Price));
+            return View(new PaymentViewModel(context, screeningId, seatNo, seat.Price, User.Identity.GetUserId()));
+        }
+
+        [Route("thankyou")]
+        public IActionResult ThankYou()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -47,7 +54,7 @@ namespace viacinema.Controllers
 
             if (!ModelState.IsValid || !isCardNumberValid)
             {
-                return View("Index", new PaymentViewModel(context, payment.ScreeningId, payment.SeatNo, payment.Amount));
+                return View("Index", new PaymentViewModel(context, payment.ScreeningId, payment.SeatNo, payment.Amount, User.Identity.GetUserId()));
             }
 
             context.Payments.Add(payment);
@@ -59,7 +66,8 @@ namespace viacinema.Controllers
                 seatScreening.Occupied = true;
             }
             context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("ThankYou", "Payment");
         }
 
         [HttpPost, NonAction]
