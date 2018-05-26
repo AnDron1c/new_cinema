@@ -31,13 +31,19 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Reservations">My Reservations</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        @RenderBody()
+        <div class="main-content">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; 2018 - viacinema</p>
@@ -68,3 +74,9 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    .main-content {
+        min-height: calc(100vh - 165px);
+    }
+</style>

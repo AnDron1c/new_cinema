@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace viacinema.Models
 {
     public class Payment
     {
         public int Id { get; set; }
+
+        public Screening Screening { get; set; }
 
         [Required]
         public int ScreeningId { get; set; }
@@ -13,7 +16,7 @@ namespace viacinema.Models
         public int SeatNo { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         public string NameOnCard { get; set; }
@@ -29,6 +32,8 @@ namespace viacinema.Models
 
         [Required, Range(100, 999)]
         public int SecurityCode { get; set; }
+
+        public DateTime DatePaid = DateTime.Now;
 
         [Required]
         public decimal Amount { get; set; }

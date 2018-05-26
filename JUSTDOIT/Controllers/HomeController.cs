@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Models;
 using viacinema.Data;
 using viacinema.ViewModels;
+using Microsoft.AspNet.Identity;
+using viacinema.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace viacinema.Controllers
 {
@@ -34,6 +36,14 @@ namespace viacinema.Controllers
             ViewData["Message"] = "Your application description page.";
 
             return View();
+        }
+
+        [Authorize, Route("reservations")]
+        public IActionResult Reservations()
+        {
+            var payments = context.Payments.Include(p => p.Screening).Include(p => p.Screening.Movie).ToList();
+           
+            return View(new ReservationsViewModel(payments));
         }
 
         public IActionResult Contact()

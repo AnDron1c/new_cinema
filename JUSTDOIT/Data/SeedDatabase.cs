@@ -33,8 +33,8 @@ namespace viacinema.Data
             if (!context.Screenings.Any())
             {
                 List<Movie> movies = context.Movies.Take(2).ToList();
-                AddScreening(context, movies[0].Id, 1, DateTime.Now, "3D");
-                AddScreening(context, movies[1].Id, 2, new DateTime(2018, 5, 22, 15, 0, 0), "2D");
+                AddScreening(context, movies[0].Id, 1, new DateTime(2018, 6, 19, 20, 30, 0), "3D");
+                AddScreening(context, movies[1].Id, 2, new DateTime(2018, 6, 15, 15, 0, 0), "2D");
                 context.SaveChanges();
             }
             if (!context.SeatScreeningMediator.Any())

@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180526104513_ScreeningMovieColumnAdded")]
+    partial class ScreeningMovieColumnAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,6 +265,8 @@ namespace viacinema.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Movie");
+
                     b.Property<int>("MovieId");
 
                     b.Property<int>("RoomNo");
@@ -275,8 +278,6 @@ namespace viacinema.Data.Migrations
                     b.Property<DateTime>("StartTime");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.ToTable("Screenings");
                 });
@@ -369,14 +370,6 @@ namespace viacinema.Data.Migrations
                     b.HasOne("viacinema.Models.Screening", "Screening")
                         .WithMany()
                         .HasForeignKey("ScreeningId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("viacinema.Models.Screening", b =>
-                {
-                    b.HasOne("viacinema.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
