@@ -58,7 +58,6 @@ namespace viacinema.Controllers
             }
 
             context.Payments.Add(payment);
-            Screening screening = context.Screenings.SingleOrDefault(s => s.Id == payment.ScreeningId);
             SeatScreening seatScreening = context.SeatScreeningMediator.FirstOrDefault(s => s.ScreeningId == payment.ScreeningId && s.SeatNo == payment.SeatNo);
 
             if (seatScreening != null)
