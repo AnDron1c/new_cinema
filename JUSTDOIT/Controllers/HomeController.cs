@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Models;
@@ -23,6 +22,7 @@ namespace viacinema.Controllers
 
         public IActionResult Index()
         {
+            // returns movies, most rated and latest ones are on top
             var movies = context.Movies
                 .OrderByDescending(c => c.ReleaseDate)
                 .OrderByDescending(c => c.Rating)
@@ -41,7 +41,13 @@ namespace viacinema.Controllers
         [Authorize, Route("reservations")]
         public IActionResult Reservations()
         {
-            var payments = context.Payments.Include(p => p.Screening).Include(p => p.Screening.Movie).ToList();
+            // populates Seat, Screening and Movie in each Payment object
+            var payments = context.Payments
+                .Include(p => p.Seat)
+                .Where(p => p.UserId == User.Identity.GetUserId())
+                .Include(p => p.Screening)
+                .Include(p => p.Screening.Movie)
+                .ToList();
            
             return View(new ReservationsViewModel(payments));
         }

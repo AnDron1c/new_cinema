@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using viacinema.Data;
 using Microsoft.AspNetCore.Mvc;
-using viacinema.Data;
 using viacinema.Models;
 
 namespace viacinema.Controllers.Api

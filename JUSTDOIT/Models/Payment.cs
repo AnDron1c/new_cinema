@@ -12,8 +12,10 @@ namespace viacinema.Models
         [Required]
         public int ScreeningId { get; set; }
 
+        public Seat Seat { get; set; }
+
         [Required]
-        public int SeatNo { get; set; }
+        public int SeatId { get; set; }
 
         [Required]
         public string UserId { get; set; }
