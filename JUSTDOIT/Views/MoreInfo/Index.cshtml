@@ -136,7 +136,7 @@
             $(".seat-cell").on("click", function () {
 
                 var seatNo = $(this).attr("data-seat-no");
-                if (seats[seatNo].occupied) return;
+                if (seats[seatNo - 1].occupied) return;
 
                 selectedSeat = seatNo;
                 $(".seat-cell").removeClass('selected');
