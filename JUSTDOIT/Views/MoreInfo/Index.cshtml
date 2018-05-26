@@ -36,7 +36,7 @@
             {
                 <li class="screening-container">   
                             <span class="date-time"><b>Date and Time: </b>@screening.StartTime </span>
-                            <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes</span>
+                            <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours h<b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes m</span>
                             <span class="screen-type"><b>Screen Type:</b> @screening.ScreenType</span>
                             @{ if (this.User.Identity.IsAuthenticated)
                                 {
@@ -170,6 +170,10 @@
 }
 
 <style>
+    ul {
+        padding: unset;
+    }
+
     .movie-rating {
         display: flex;
         align-items: center;
@@ -230,8 +234,8 @@
     }
 
     .screening-container {
-        border: 2px solid #CCCC;
-        margin-top: 0;
+        border: 2px solid #CCC;
+        margin: 20px 0;
         display: flex;
         padding-top: 10px;
         padding-bottom: 10px;
