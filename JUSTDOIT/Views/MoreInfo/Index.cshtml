@@ -31,31 +31,26 @@
 </div>
 <div class="screenings">
     <h2>Screenings</h2>
-    <ul class="screening-list">
+    <ul>
         @{ foreach (Screening screening in @Model.Screenings)
             {
                 <li class="screening-container">   
                             <span class="date-time"><b>Date and Time: </b>@screening.StartTime </span>
                             <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes</span>
                             <span class="screen-type"><b>Screen Type:</b> @screening.ScreenType</span>
-                            @*<input class="book-button" type="button" value="Book" />*@
-                            @if (this.User.Identity.IsAuthenticated)
-                            {
+                            @{ if (this.User.Identity.IsAuthenticated)
+                                {
                                 <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
                                     Book
                                 </button>
-                            }
-                            else
-                            {
+                                }
+                                else
+                                {
                                 <a class="btn btn-primary book-button" asp-area="" asp-controller="Account" asp-action="Login">
                                     Book
                                 </a>
-                                
-
-
-                            }
-
-</div>
+                                }
+                             }
                 </li>
             }
         }
@@ -151,13 +146,11 @@
                 method: "GET",
                 success: function (screening) {
                     $('.room-number').text(screening.roomNo);
-                    $('.screen-type').text(screening.screenType);
                     $.ajax({
                         url: "/api/seats/seatsscreening/" + screening.id + "/" + screening.roomNo,
                         method: "GET",
                         success: function (seats) {
                             updateTable(seats);
-                            console.log(seats)
                         }
                     });
                 }
@@ -185,14 +178,6 @@
 
     .movie-content {
         display: inline-flex;
-    }
-
-    .screening-content {
-        width: 100%;
-    }
-
-    .screening-time {
-        
     }
 
     .btn-primary {
