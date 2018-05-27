@@ -23,6 +23,7 @@ namespace viacinema.Models
         public int RoomNo { get; set; }
 
         [Required]
-        public Boolean Occupied { get; set; }
+        public Boolean Occupied { get; set; } //a seat is only occupied for a specific screening, 
+                                             // held in the seat's corresponding room
     }
 }

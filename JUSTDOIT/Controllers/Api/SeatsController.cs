@@ -17,7 +17,7 @@ namespace viacinema.Controllers.Api
 
         [HttpGet]
         public IActionResult GetAllSeats()
-        {
+        {   //seats with the highest price are on top
             var seats = context.Seats
                 .OrderByDescending(c => c.Price)
                 .ToList();
@@ -27,7 +27,7 @@ namespace viacinema.Controllers.Api
 
         [HttpGet("seatsroom/{roomNo}")]
         public IActionResult GetSeatsForRoom(int roomNo)
-        {
+        {   //receive seats for a specific room
             var seats = context.Seats
                 .Where(s => s.RoomNo == roomNo)
                 .OrderBy(s => s.SeatNo)
@@ -38,7 +38,7 @@ namespace viacinema.Controllers.Api
 
         [HttpGet("seatsscreening/{screeningID}/{roomNo}")]
         public IActionResult GetSeatsForScreening(int screeningID, int roomNo)
-        {
+        {   //getting the seats for a specific screening and room
             var seats = context.SeatScreeningMediator
                 .Where(s => s.ScreeningId == screeningID && s.RoomNo == roomNo)
                 .OrderBy(s => s.SeatNo)

@@ -7,6 +7,8 @@
 @using viacinema.Models
 
 <h2>Specifics</h2>
+
+                 @*first show information about the movie itself - title, description, rating, etc.*@
 @{
     Movie movie = @Model.Movie;
 }
@@ -19,6 +21,8 @@
         @Html.Partial("_RatingPartial", @movie)
     </div>
 </div>
+
+                @*show information about all of the movie's corresponding screenings - time and date, duration, etc.*@
 <div class="screenings">
     <h2>Screenings</h2>
     <ul>
@@ -29,7 +33,7 @@
                             <span class="duration"><b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours h<b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes m</span>
                             <span class="screen-type"><b>Screen Type:</b> @screening.ScreenType</span>
                             @{ if (this.User.Identity.IsAuthenticated)
-                                {
+                                {                       /*can't book a seat unless logged in*/
                                 <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
                                     Book
                                 </button>
@@ -50,6 +54,7 @@
 </div>
 
 <!-- Modal -->
+@*Seats for the screening are shown*@ 
 <div class="modal fade" id="reserveSeatModal" tabindex="-1" role="dialog" aria-labelledby="reserveSeatModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -96,7 +101,7 @@
 
         function updateTable(seats) {
             var html = "";
-
+            //making the seats grid - occupied seats are red, free seats - green, the selected seat is blue
             const rows = seats.length / 10;
             for (var i = 0; i < seats.length; i++) {
                 var el = "";

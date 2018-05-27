@@ -16,7 +16,7 @@ namespace viacinema.Controllers.Api
 
         [HttpGet("{id}", Name = "GetScreening")]
         public IActionResult GetScreening(int id)
-        {
+        {   //get a screening by its id
             var screeningInDb = context.Screenings
                 .SingleOrDefault(s => s.Id == id);
 

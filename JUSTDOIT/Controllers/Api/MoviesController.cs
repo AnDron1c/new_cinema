@@ -17,7 +17,7 @@ namespace viacinema.Controllers.Api
 
         [HttpGet]
         public IActionResult GetAllMovies()
-        {
+        {   //getting all movies, most recent movies are first
             var movies = context.Movies
                 .OrderByDescending(c => c.ReleaseDate)
                 .ToList();
@@ -58,11 +58,6 @@ namespace viacinema.Controllers.Api
 
             if (movieInDb == null)
                 return NotFound();
-
-            //movieInDb.Title = movie.Title != null ? movie.Title : movieInDb.Title;
-            //movieInDb.Description = movie.Description != null ? movie.Description : movieInDb.Description;
-            //movieInDb.Genre = movie.Genre != null ? movie.Genre : movieInDb.Genre;
-            //movieInDb.Rating = movie.Rating != null ? movie.Rating : movieInDb.Rating;
 
             context.SaveChanges();
 

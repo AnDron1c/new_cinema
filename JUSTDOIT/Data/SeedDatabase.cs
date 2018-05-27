@@ -12,7 +12,7 @@ namespace viacinema.Data
         public static void Seed(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-            // comment
+            // only seeds tables if there are no records in them
             if (!context.Movies.Any())
             {
                 AddMovies(context);
@@ -31,14 +31,14 @@ namespace viacinema.Data
                 context.SaveChanges();
             }
             if (!context.Screenings.Any())
-            {
+            {   //add screenings for two movies from the DB
                 List<Movie> movies = context.Movies.Take(2).ToList();
                 AddScreening(context, movies[0].Id, 1, new DateTime(2018, 6, 19, 20, 30, 0), "3D");
                 AddScreening(context, movies[1].Id, 2, new DateTime(2018, 6, 15, 15, 0, 0), "2D");
                 context.SaveChanges();
             }
             if (!context.SeatScreeningMediator.Any())
-            {
+            {   //add the records in the mediator table for Seat and Screening
                 AddSeatScreening(context, 2);
                 AddSeatScreening(context, 1);
                 context.SaveChanges();

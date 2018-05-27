@@ -18,6 +18,8 @@ namespace viacinema.Controllers
             this.context = _context;
         }
 
+        //Movie ID received from homepage and used 
+        //to get the movie and find its corresponding, future screenings for MoreInfo (Specifics) page
         [Route("{id}")]
         public IActionResult Index(int id)
         {
@@ -28,13 +30,7 @@ namespace viacinema.Controllers
                 .OrderByDescending(s => s.StartTime)
                 .ToList();
 
-            List<SeatScreening> seatScreenings = new List<SeatScreening>();
-            foreach (var screening in screenings)
-            {
-                seatScreenings.AddRange(context.SeatScreeningMediator.Where(s => s.ScreeningId == screening.Id).ToList());
-            }
-
-            return View(new MoreInfoViewModel(movie, screenings, seatScreenings));
+            return View(new MoreInfoViewModel(movie, screenings));
         }
     }
 }
